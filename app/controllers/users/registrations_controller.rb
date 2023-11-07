@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionFix
   respond_to :json
@@ -11,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
     if user.save
     token = user.generate_jwt
-      render json: token.to_json
+      render json: 'User Created'
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
     end

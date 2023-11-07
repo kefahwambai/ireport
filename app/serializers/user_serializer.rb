@@ -4,6 +4,4 @@ class UserSerializer
 
   has_many :redflags
   has_many :interventions
-
-
 end

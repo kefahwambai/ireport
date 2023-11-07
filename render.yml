@@ -1,7 +1,7 @@
 databases:
-  - name: iReporter
-    databaseName: ireporter_b3bd
-    user: ireporter_b3bd_user
+  - name: reporterapp
+    databaseName: reporterapp_luwr
+    user: reporterapp_luwr_user
 
 services:
   - type: web
@@ -12,7 +12,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: ireporter_b3bd
+          name: reporterapp_luwr
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false

@@ -5,10 +5,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   def create
-    user = User.new(sign_up_params)
+    @user = User.new(sign_up_params)
   
-    if user.save
-    token = user.generate_jwt
+    if @user.save
+    token = @user.generate_jwt
       render json: 'User Created'
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity

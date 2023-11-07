@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :redflags
   resources :interventions
+  resources :password_resets, only: [:create, :update]
   resources :government_agencies
+  get 'current_user', to: 'current_user#index'
+
  devise_for :users, path: '', path_names: {
   sign_in: 'login',
   sign_out: 'logout',

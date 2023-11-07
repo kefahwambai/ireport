@@ -279,9 +279,9 @@ DEPENDENCIES
   activestorage (~> 7.0.8)
   bcrypt (~> 3.1.7)
   bootsnap
-  cancancan
-  devise
-  devise-jwt
+  cancancan (~> 3.5)
+  devise (~> 4.9, >= 4.9.2)
+  devise-jwt (~> 0.11.0)
   geocoder
   google-cloud-storage
   image_processing (~> 1.2)

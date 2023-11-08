@@ -15,6 +15,7 @@ class User < ApplicationRecord
        payload = { user_id: id }
        JWT.encode(payload, Rails.application.credentials.fetch(:secret_key_base), 'HS256')
   end  
-  
+
+
      
 end

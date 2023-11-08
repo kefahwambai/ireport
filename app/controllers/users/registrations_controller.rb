@@ -8,8 +8,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new(sign_up_params)
   
     if @user.save
-    token = @user.generate_jwt
-      render json: 'User Created'
+    token = @user.generate_jwt    
+    render json: { message: 'User Created', token: token }, status: :created
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
     end

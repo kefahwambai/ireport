@@ -1,9 +1,9 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://http://localhost:4000"
+    origins "https://ireporter.vercel.app"
 
     resource "*",
-    headers: :any,
+    headers: ["Authorization"],
     expose: ['access-token', 'expiry', 'token-type', 'Authorization'],
     methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end

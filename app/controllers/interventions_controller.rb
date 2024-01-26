@@ -1,9 +1,11 @@
 class InterventionsController < ApplicationController
-  load_and_authorize_resource  
-  before_action :set_user
-
+  before_action :authenticate_request!
+  load_and_authorize_resource
+  
   # GET /interventions
   def index
+   
+
     if @user
       @interventions = @user.interventions
       render json: @interventions
@@ -20,7 +22,7 @@ class InterventionsController < ApplicationController
 
   # POST /interventions
   def create
-    @intervention = Intervention.new(intervention_params)
+    @intervention = current_user!.posts.build(intervention_params)
     @intervention.government_agency_id = params[:government_agency_id]
   
     if @intervention.save
@@ -35,13 +37,13 @@ class InterventionsController < ApplicationController
     # PATCH/PUT /interventions/1
 
   def update
-    @user = current_user
-
-    @intervention = @user.interventions.find_by(id: params[:id])
-
+    @intervention = current_user.interventions.find_by(id: params[:id])
+  
     if @intervention.nil?
       render json: { error: 'Intervention not found' }, status: :not_found
     else
+      authorize! :update, @intervention
+  
       if @intervention.update(status: params[:status])
         render json: @intervention
       else
@@ -49,6 +51,7 @@ class InterventionsController < ApplicationController
       end
     end
   end
+    
 
 
 
@@ -56,13 +59,17 @@ class InterventionsController < ApplicationController
   # DELETE /interventions/1
   def destroy
     @intervention = Intervention.find(params[:id])
+  
+    authorize! :destroy, @intervention
+  
     if @intervention.user_id == current_user.id
       @intervention.destroy
       render json: { message: "Intervention deleted successfully" }
     else
-      render json: { error: "You don't have permission to delete this Intervention" }, status: :forbidden
+      render json: { error: "You don't have permission to delete this intervention" }, status: :forbidden
     end
   end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

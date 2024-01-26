@@ -1,6 +1,8 @@
-class UserSerializer
-  include JSONAPI::Serializer
+class UserSerializer < ActiveModel::Serializer
+  
   attributes :id, :name, :email, :id_number, :admin
+
+  
 
   has_many :redflags
   has_many :interventions

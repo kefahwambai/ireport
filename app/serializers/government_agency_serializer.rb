@@ -1,5 +1,4 @@
-class GovernmentAgencySerializer 
-  include JSONAPI::Serializer
+class GovernmentAgencySerializer < ActiveModel::Serializer
   attributes :id, :name
   has_many :interventions
 end

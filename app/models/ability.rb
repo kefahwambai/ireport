@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.nil? # Check if the user is a guest (not logged in)
+    if user.nil?
       can :create, User
     elsif user.admin?
       can :manage, :all

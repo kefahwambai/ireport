@@ -1,5 +1,5 @@
-class RedflagSerializer 
-  include JSONAPI::Serializer
+class RedflagSerializer < ActiveModel::Serializer
+  
   attributes :id, :title, :description, :status, :location
   has_one :user
 

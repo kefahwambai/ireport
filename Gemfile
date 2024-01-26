@@ -37,15 +37,14 @@ gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
-gem 'devise', '~> 4.9', '>= 4.9.2'
-gem 'devise-jwt', '~> 0.11.0'
-gem 'jsonapi-serializer'
+gem 'jwt'
 gem 'google-cloud-storage'
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'sprockets-rails', group: :assets
 gem 'activestorage', '~> 7.0.8'
 gem 'geocoder'
 gem 'cancancan', '~> 3.5'
+gem 'activeadmin'
 
 
 

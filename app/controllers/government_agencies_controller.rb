@@ -1,6 +1,8 @@
 class GovernmentAgenciesController < ApplicationController
+  before_action :authenticate_request!
   load_and_authorize_resource
-
+  # before_action :set_user
+  
   # GET /government_agencies
   def index
     @government_agencies = GovernmentAgency.all

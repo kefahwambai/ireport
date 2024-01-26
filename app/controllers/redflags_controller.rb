@@ -1,6 +1,7 @@
 class RedflagsController < ApplicationController  
+  before_action :authenticate_request!
   load_and_authorize_resource  
-  before_action :set_user, only: :index
+  
 
 
   # GET /redflags
@@ -21,7 +22,10 @@ class RedflagsController < ApplicationController
 
   # POST /redflags
   def create
-    @redflag = Redflag.new(redflag_params)
+    puts "Received POST request for Redflag with parameters: #{redflag_params}"
+
+    # current_user!
+    @redflag = current_user.redflags.build(redflag_params)
 
     if @redflag.save
       render json: @redflag, status: :created, location: @redflag
@@ -33,13 +37,13 @@ class RedflagsController < ApplicationController
   # PATCH/PUT /redflags/1
   # PATCH/PUT /redflags/1
   def update
-    @user = current_user
-
-    @redflag = @user.redflags.find_by(id: params[:id])
-
+    @redflag = current_user.redflags.find_by(id: params[:id])
+  
     if @redflag.nil?
       render json: { error: 'Redflag not found' }, status: :not_found
     else
+      authorize! :update, @redflag
+  
       if @redflag.update(status: params[:status])
         render json: @redflag
       else
@@ -47,11 +51,14 @@ class RedflagsController < ApplicationController
       end
     end
   end
-
+  
 
   # DELETE /redflags/1
   def destroy
     @redflag = Redflag.find(params[:id])
+  
+    authorize! :destroy, @redflag
+  
     if @redflag.user_id == current_user.id
       @redflag.destroy
       render json: { message: "Redflag deleted successfully" }
@@ -59,8 +66,17 @@ class RedflagsController < ApplicationController
       render json: { error: "You don't have permission to delete this redflag" }, status: :forbidden
     end
   end
+  
 
   private
+
+    # def authenticate_user!
+    #   current_user || render_unauthorized
+    # end
+
+    # def render_unauthorized
+    #   render json: { error: 'You need to log in first' }, status: :unauthorized
+    # end
     # Use callbacks to share common setup or constraints between actions.
     def set_redflag
       @redflag = Redflag.find(params[:id])
